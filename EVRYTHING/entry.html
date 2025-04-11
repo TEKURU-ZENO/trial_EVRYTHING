@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entry Page</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #typewriter-container {
+            height: 50px;
+            margin-bottom: 40px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        #typewriter {
+            border-right: 3px solid white;
+            padding-right: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: white }
+        }
+
+        #enter-message {
+            margin-bottom: 20px;
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Updated enter button with glitch effect */
+        #enter-button {
+            padding: 16px 20px;
+            font-size: 18px;
+            background: linear-gradient(45deg, transparent 5%, #ff013c 5%);
+            border: 0;
+            color: #fff;
+            letter-spacing: 3px;
+            line-height: 1;
+            box-shadow: 6px 0px 0px #00e6f6;
+            outline: transparent;
+            position: relative;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Glitch effect on hover */
+        #enter-button:hover {
+            animation: glitch 0.3s linear infinite;
+            text-shadow: 
+                2px 2px #ff00ff,
+                -2px -2px #00ffff;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+                text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff;
+            }
+            25% {
+                transform: translate(-2px, 2px);
+                text-shadow: -2px -2px #ff00ff, 2px 2px #00ffff;
+            }
+            50% {
+                transform: translate(2px, -2px);
+                text-shadow: 2px -2px #ff00ff, -2px 2px #00ffff;
+            }
+            75% {
+                transform: translate(-2px, -2px);
+                text-shadow: -2px 2px #ff00ff, 2px -2px #00ffff;
+            }
+            100% {
+                transform: translate(0);
+                text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff;
+            }
+        }
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        #loading-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('image/loading.gif');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        /* Modified loading button to match the enter button style */
+        .loading-button {
+            padding: 16px 40px;
+            font-size: 18px;
+            background: linear-gradient(45deg, transparent 5%, #ff013c 5%);
+            border: 0;
+            color: #fff;
+            letter-spacing: 3px;
+            line-height: 1;
+            box-shadow: 6px 0px 0px #00e6f6;
+            outline: transparent;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 1;
+            animation: glitch 0.3s linear infinite;
+            text-shadow: 
+                2px 2px #ff00ff,
+                -2px -2px #00ffff;
+        }
+
+        /* Updated Skip Button Styles - purple gradient */
+        .Btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100px;
+            height: 40px;
+            border: none;
+            padding: 0px 20px;
+            /* Updated colors to purple gradient */
+            background: linear-gradient(to right, #9900ff, #ff00ff);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px -7px rgba(153, 0, 255, 0.5);
+            transition-duration: 0.3s;
+            text-shadow: 0 0 5px #ff00ff;
+            border: 1px solid #9900ff;
+            z-index: 100;
+            opacity: 1;
+        }
+
+        .svg {
+            width: 12px;
+            position: absolute;
+            right: 0;
+            margin-right: 20px;
+            fill: white;
+            transition-duration: 0.3s;
+        }
+
+        .Btn:hover {
+            color: transparent;
+        }
+
+        .Btn:hover svg {
+            right: 43%;
+            margin: 0;
+            padding: 0;
+            border: none;
+            transition-duration: 0.3s;
+        }
+
+        .Btn:active {
+            transform: translate(3px, 3px);
+            transition-duration: 0.3s;
+            box-shadow: 0 5px 10px -7px rgba(153, 0, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip button in top right corner -->
+    <button class="Btn" id="skip-button">
+        SKIP
+        <svg class="svg" viewBox="0 0 512 512">
+            <path d="M500.5 231.4l-192-160C287.9 54.3 256 68.6 256 96v320c0 27.4 31.9 41.8 52.5 24.6l192-160c15.3-12.8 15.3-36.4 0-49.2zm-256 0l-192-160C31.9 54.3 0 68.6 0 96v320c0 27.4 31.9 41.8 52.5 24.6l192-160c15.3-12.8 15.3-36.4 0-49.2z"></path>
+        </svg>
+    </button>
+
+    <div id="typewriter-container">
+        <span id="typewriter"></span>
+    </div>
+    <div id="enter-message">Click to enter</div>
+    <button id="enter-button">ENTER</button>
+
+    <div id="loading-screen">
+        <div id="loading-background"></div>
+        <div class="loading-button">LOADING</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Text to type - will only display once
+            const texts = [
+               "There was a time when everything had a simple yet uniform solution. The only solution ever needed to anything",
+                "Then everyone took a unique problem and gave their own solutions , making the products more variable....",
+                "But what if only one solution is all it takes to solve almost anything ? ",
+                "Fascinating right?",
+                "Welcome to my project , EVRYTHING"
+            ];
+            
+            let textIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typingSpeed = 100;
+            let typingInterval;
+            
+            const typewriterElement = document.getElementById('typewriter');
+            const enterMessage = document.getElementById('enter-message');
+            const enterButton = document.getElementById('enter-button');
+            const loadingScreen = document.getElementById('loading-screen');
+            const skipButton = document.getElementById('skip-button');
+            
+            function typeWriter() {
+                const currentText = texts[textIndex];
+                
+                if (isDeleting) {
+                    // Backspace effect
+                    typewriterElement.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                    typingSpeed = 50; // Faster when deleting
+                } else {
+                    // Typing effect
+                    typewriterElement.textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                    typingSpeed = 100; // Normal typing speed
+                }
+                
+                // If we're done typing the current text
+                if (!isDeleting && charIndex === currentText.length) {
+                    // Pause at the end of typing
+                    typingSpeed = 1500;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    // Move to next text after deleting
+                    isDeleting = false;
+                    textIndex++;
+                    typingSpeed = 500; // Pause before starting new text
+                    
+                    // If we've gone through all texts, show enter button
+                    if (textIndex >= texts.length) {
+                        // We've gone through all texts, show enter button and stop typing
+                        enterMessage.style.opacity = 1;
+                        enterButton.style.opacity = 1;
+                        return; // Exit the function to stop the typing
+                    }
+                }
+                
+                // Continue the typing animation
+                typingInterval = setTimeout(typeWriter, typingSpeed);
+            }
+            
+            // Start the typewriter effect
+            typeWriter();
+            
+            // Handle enter button click
+            enterButton.addEventListener('click', function() {
+                loadingScreen.style.display = 'flex';
+                
+                // Redirect after 2.5 seconds (reduced from 5 seconds)
+                setTimeout(function() {
+                    window.location.href = 'about_us.html';
+                }, 2500);
+            });
+
+            // Handle skip button click
+            skipButton.addEventListener('click', function() {
+                // Clear the typing interval to stop the animation
+                clearTimeout(typingInterval);
+                
+                // Show enter message and button
+                enterMessage.style.opacity = 1;
+                enterButton.style.opacity = 1;
+                
+                // Show the loading screen directly
+                loadingScreen.style.display = 'flex';
+                
+                // Redirect after 2.5 seconds (reduced from 5 seconds)
+                setTimeout(function() {
+                    window.location.href = 'about_us.html';
+                }, 2500);
+            });
+        });
+    </script>
+</body>
+</html>

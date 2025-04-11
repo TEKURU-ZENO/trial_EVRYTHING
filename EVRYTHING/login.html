@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Signup</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            width: 800px; /* Increased from 600px */
+            height: 500px; /* Increased from 450px */
+            overflow: hidden;
+            border-radius: 18px; /* Slightly larger radius */
+            background: rgba(20, 20, 20, 0.9);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Glow Effect */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: conic-gradient(#6e1b60, #402fb5, #cf30aa, #402fb5, #6e1b60);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, filter 0.5s ease-in-out;
+            filter: blur(3px);
+        }
+
+        .container:hover::before {
+            opacity: 1;
+            filter: blur(8px);
+            animation: rotateBorder 8s linear infinite;
+        }
+
+        @keyframes rotateBorder {
+            0% {
+                background: conic-gradient(#6e1b60, #402fb5, #cf30aa, #402fb5, #6e1b60);
+            }
+            100% {
+                background: conic-gradient(#402fb5, #6e1b60, #402fb5, #cf30aa, #402fb5);
+            }
+        }
+
+        /* Form Wrapper */
+        .form-wrapper {
+            display: flex;
+            width: 200%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+            /* Initially show the login form by default */
+            transform: translateX(-50%);
+        }
+
+        .form-container {
+            width: 50%;
+            padding: 45px; /* Increased padding */
+            box-sizing: border-box;
+            text-align: center;
+            color: white;
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        /* Input Boxes */
+        .input-box {
+            margin: 15px 0; /* Increased margin */
+            position: relative;
+        }
+
+        .input-box input,
+        .input-box select {
+            width: 100%;
+            padding: 14px; /* Increased padding */
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid transparent;
+            border-radius: 10px; /* Increased radius */
+            color: white;
+            font-size: 17px; /* Increased font size */
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Error state for input fields */
+        .input-box input.error,
+        .input-box select.error {
+            border-color: #ff3860;
+            box-shadow: 0 0 15px rgba(255, 56, 96, 0.5);
+        }
+
+        /* Error message */
+        .error-message {
+            color: #ff3860;
+            font-size: 14px;
+            margin-top: 5px;
+            text-align: left;
+            display: none;
+        }
+
+        /* Fix for select dropdown and options */
+        .input-box select {
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+
+        /* Styling the dropdown options */
+        .input-box select option {
+            background-color: #2a2a2a;
+            color: white;
+            padding: 16px;
+        }
+
+        .input-box input:focus,
+        .input-box select:focus,
+        .input-box input:hover,
+        .input-box select:hover {
+            border-color: #cf30aa;
+            box-shadow: 0 0 15px rgba(207, 48, 170, 0.5);
+            outline: none;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Buttons */
+        .submit-btn {
+            width: 100%;
+            padding: 16px; /* Increased padding */
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            border: none;
+            color: white;
+            font-size: 20px; /* Increased font size */
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(90deg, #6e1b60, #402fb5, #cf30aa, #402fb5, #6e1b60);
+            z-index: -1;
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(207, 48, 170, 0.4);
+        }
+
+        .submit-btn:hover::before {
+            opacity: 1;
+            animation: rotateBorder 4s linear infinite;
+        }
+
+        /* Form Switcher */
+        .switch-form {
+            margin-top: 25px;
+            font-size: 16px; /* Increased font size */
+        }
+
+        .switch-form span {
+            color: #cf30aa;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .switch-form span:hover {
+            color: #ff5dc8;
+            text-shadow: 0 0 10px rgba(207, 48, 170, 0.8);
+            background: rgba(207, 48, 170, 0.1);
+        }
+
+        /* Form Titles */
+        h2 {
+            margin-bottom: 25px;
+            font-size: 36px; /* Increased font size */
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(207, 48, 170, 0.3);
+        }
+
+        /* Alert box for validation warnings */
+        .alert-box {
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            background: rgba(255, 56, 96, 0.9);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            font-size: 16px;
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .show-alert {
+            display: block;
+            opacity: 1;
+            animation: fadeInOut 3s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { opacity: 0; display: none; }
+        }
+
+        /* Glass Scrollbar - multiple browser support */
+        .form-container::-webkit-scrollbar {
+            width: 10px; /* Increased width */
+        }
+
+        .form-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb {
+            background: rgba(207, 48, 170, 0.7);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .form-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(207, 48, 170, 0.9);
+            box-shadow: 0 0 10px rgba(207, 48, 170, 0.5);
+        }
+
+        .form-container {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(207, 48, 170, 0.7) rgba(255, 255, 255, 0.1);
+        }
+
+        /* Add Animation for form transition */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .input-box, .submit-btn, .switch-form {
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .input-box:nth-child(2) { animation-delay: 0.1s; }
+        .input-box:nth-child(3) { animation-delay: 0.2s; }
+        .input-box:nth-child(4) { animation-delay: 0.3s; }
+        .input-box:nth-child(5) { animation-delay: 0.4s; }
+        .input-box:nth-child(6) { animation-delay: 0.5s; }
+        .input-box:nth-child(7) { animation-delay: 0.6s; }
+        .submit-btn { animation-delay: 0.7s; }
+        .switch-form { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-wrapper" id="form-wrapper">
+        <!-- Signup Form -->
+        <div class="form-container signup-form">
+            <h2>Sign Up</h2>
+            <form id="signup-form" onsubmit="handleSignup(event)">
+                <div class="input-box">
+                    <input type="text" placeholder="Full Name" id="fullname">
+                    <div class="error-message">Please enter your full name</div>
+                </div>
+                <div class="input-box">
+                    <input type="email" placeholder="Email" id="email">
+                    <div class="error-message">Please enter a valid email</div>
+                </div>
+                <div class="input-box">
+                    <input type="number" placeholder="Age" id="age" min="13" max="120">
+                    <div class="error-message">Please enter your age (13-120)</div>
+                </div>
+                <div class="input-box">
+                    <select id="gender">
+                        <option value="" disabled selected>Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div class="error-message">Please select your gender</div>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Username" id="signup-username">
+                    <div class="error-message">Please enter a username</div>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Password" id="signup-password">
+                    <div class="error-message">Please enter a password</div>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Confirm Password" id="confirm-password">
+                    <div class="error-message">Passwords don't match</div>
+                </div>
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+            <p class="switch-form">Already a member? <span onclick="toggleForm()">Login</span></p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="form-container login-form">
+            <h2>Login</h2>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="input-box">
+                    <input type="text" placeholder="Username" id="login-username" required>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Password" id="login-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            <p class="switch-form">New here? <span onclick="toggleForm()">Sign Up</span></p>
+        </div>
+    </div>
+</div>
+
+<!-- Alert Box for Validation Warnings -->
+<div class="alert-box" id="alert-box"></div>
+
+<script>
+    // Keep track of which form is currently shown
+    let isLoginForm = true;
+
+    // Toggle Form Function - Fixed version
+    function toggleForm() {
+        const wrapper = document.getElementById("form-wrapper");
+        
+        // Toggle the state and set the transform accordingly
+        isLoginForm = !isLoginForm;
+        
+        if (isLoginForm) {
+            wrapper.style.transform = "translateX(-50%)";
+        } else {
+            wrapper.style.transform = "translateX(0)";
+        }
+    }
+
+    // Show Alert Function
+    function showAlert(message) {
+        const alertBox = document.getElementById("alert-box");
+        alertBox.textContent = message;
+        alertBox.classList.add("show-alert");
+        
+        setTimeout(() => {
+            alertBox.classList.remove("show-alert");
+        }, 3000);
+    }
+
+    // Handle Login Form Submission
+    function handleLogin(event) {
+        event.preventDefault();
+        const username = document.getElementById("login-username").value;
+        const password = document.getElementById("login-password").value;
+        
+        // Here you would normally send this data to your server
+        console.log("Login attempt:", { username, password });
+        
+        // For demo purposes only
+        alert(`Login Submitted: ${username}`);
+    }
+
+    // Validate Input Field
+    function validateField(field) {
+        const errorElement = field.nextElementSibling;
+        
+        // If it's empty (except select which is handled differently)
+        if (!field.value && field.tagName !== 'SELECT') {
+            field.classList.add("error");
+            errorElement.style.display = "block";
+            return false;
+        }
+        
+        // If it's a select field with no selection
+        if (field.tagName === 'SELECT' && field.value === "") {
+            field.classList.add("error");
+            errorElement.style.display = "block";
+            return false;
+        }
+        
+        // For email validation
+        if (field.type === "email" && !/\S+@\S+\.\S+/.test(field.value)) {
+            field.classList.add("error");
+            errorElement.style.display = "block";
+            return false;
+        }
+        
+        // Remove error state if the field is valid
+        field.classList.remove("error");
+        errorElement.style.display = "none";
+        return true;
+    }
+
+    // Add input event listeners to clear error state when typing
+    document.querySelectorAll("#signup-form input, #signup-form select").forEach(field => {
+        field.addEventListener("input", function() {
+            this.classList.remove("error");
+            this.nextElementSibling.style.display = "none";
+        });
+        
+        field.addEventListener("change", function() {
+            validateField(this);
+        });
+    });
+
+    // Handle Signup Form Submission
+    function handleSignup(event) {
+        event.preventDefault();
+        
+        const fullname = document.getElementById("fullname");
+        const email = document.getElementById("email");
+        const age = document.getElementById("age");
+        const gender = document.getElementById("gender");
+        const username = document.getElementById("signup-username");
+        const password = document.getElementById("signup-password");
+        const confirmPassword = document.getElementById("confirm-password");
+        
+        // Validate all fields
+        let isValid = true;
+        
+        // Check each field individually
+        if (!validateField(fullname)) isValid = false;
+        if (!validateField(email)) isValid = false;
+        if (!validateField(age)) isValid = false;
+        if (!validateField(gender)) isValid = false;
+        if (!validateField(username)) isValid = false;
+        if (!validateField(password)) isValid = false;
+        
+        // Special check for password confirmation
+        if (password.value !== confirmPassword.value) {
+            confirmPassword.classList.add("error");
+            confirmPassword.nextElementSibling.style.display = "block";
+            isValid = false;
+        } else {
+            confirmPassword.classList.remove("error");
+            confirmPassword.nextElementSibling.style.display = "none";
+        }
+        
+        // If form has errors, show alert and stop submission
+        if (!isValid) {
+            showAlert("Please fill all required fields correctly");
+            return;
+        }
+        
+        // If validation passes, continue with form submission
+        console.log("Signup attempt:", { 
+            fullname: fullname.value, 
+            email: email.value, 
+            age: age.value, 
+            gender: gender.value, 
+            username: username.value 
+        });
+        
+        // For demo purposes only
+        alert(`Sign Up Submitted: ${fullname.value}`);
+    }
+</script>
+
+</body>
+</html>

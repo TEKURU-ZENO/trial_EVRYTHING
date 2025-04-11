@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVRYTHING - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: black;
+            color: white;
+            line-height: 1.6;
+        }
+
+        /* Glassmorphism Navbar with Enhanced Glow Shadow */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            margin: 20px auto;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1); /* Transparent white */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            -webkit-backdrop-filter: blur(10px);
+            
+            /* Enhanced Shadow Glow Effect */
+            box-shadow: 
+                0 0 10px rgba(64, 47, 181, 0.5),     /* Soft purple glow */
+                0 0 20px rgba(207, 48, 170, 0.3),    /* Soft pink glow */
+                rgba(0, 0, 0, 0.3) 0px 5px 15px;     /* Dark shadow */
+            
+            border: 2px solid transparent; /* Initial transparent border */
+            transition: all 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        /* Glowing Border Effect on Hover */
+        .navbar:hover {
+            border-image: linear-gradient(90deg, #6e1b60, #402fb5, #cf30aa, #402fb5, #6e1b60);
+            border-image-slice: 1;
+            box-shadow: 
+                0 0 15px rgba(64, 47, 181, 0.7),     /* Intensified purple glow */
+                0 0 25px rgba(207, 48, 170, 0.5),    /* Intensified pink glow */
+                0 0 35px rgba(110, 27, 96, 0.3),     /* Additional color glow */
+                rgba(0, 0, 0, 0.4) 0px 7px 20px;     /* Darker shadow */
+            animation: moveBorder 3s linear infinite;
+        }
+
+        @keyframes moveBorder {
+            0% { border-image-source: linear-gradient(90deg, #6e1b60, #402fb5, #cf30aa, #402fb5, #6e1b60); }
+            50% { border-image-source: linear-gradient(90deg, #cf30aa, #402fb5, #6e1b60, #402fb5, #cf30aa); }
+            100% { border-image-source: linear-gradient(90deg, #6e1b60, #402fb5, #cf30aa, #402fb5, #6e1b60); }
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-right: 40px; /* Space between logo and nav links */
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .login-btn {
+            padding: 8px 16px;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(207, 48, 170, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            padding: 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(64, 47, 181, 0.2), transparent 70%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(207, 48, 170, 0.4);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 50px;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        /* About Us Section */
+        .about-us {
+            padding: 80px 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        .about-us-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .about-content {
+            max-width: 60%;
+        }
+
+        .about-logo {
+            width: 35%;
+            text-align: center;
+        }
+
+        .about-logo .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .about-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        /* Unified Service Card Styles */
+        .services-section {
+            padding: 80px 0 40px;
+            text-align: center;
+        }
+
+        .services-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Dark Theme Service Card (Used for all services) */
+        .service-card {
+            position: relative;
+            width: 220px;
+            height: 300px;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+            gap: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            color: white;
+            transition: all 0.4s ease;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: -5px;
+            margin: auto;
+            width: 230px;
+            height: 310px;
+            border-radius: 15px;
+            background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100%);
+            z-index: -10;
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .service-card::after {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100%);
+            transform: translate3d(0, 0, 0) scale(0.95);
+            filter: blur(20px);
+        }
+
+        .service-heading {
+            font-size: 22px;
+            text-transform: capitalize;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .service-card p:not(.service-heading) {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .service-card .learn-more {
+            color: #e81cff;
+            font-weight: 600;
+            margin-top: auto;
+        }
+
+        .service-card:hover::after {
+            filter: blur(30px);
+        }
+
+        .service-card:hover::before {
+            transform: rotate(-92deg) scaleX(1.2) scaleY(0.8);
+        }
+
+        .service-card:hover {
+            transform: scale(1.05);
+        }
+
+        .service-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+            color: #40c9ff;
+            margin: 0 auto;
+        }
+
+        /* Reviews Section */
+        .reviews {
+            padding: 80px 0;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .reviews-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Flip Card Styles */
+        .review-container {
+            height: 294px;
+            width: 240px;
+            color: white;
+            perspective: 800px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 20px;
+        }
+
+        .review-card {
+            width: 100%;
+            height: 100%;
+            background: black;
+            border-radius: 2rem;
+            position: relative;
+            transition: transform 1500ms;
+            transform-style: preserve-3d;
+        }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 10%;
+            position: absolute;
+            width: 50%;
+            background-color: transparent;
+            border: 2px solid black;
+            top: 0;
+            border-top: none;
+            border-radius: 0 0 1rem 1rem;
+            box-shadow: 0px 0px 10px 5px rgba(207, 48, 170, 0.5);
+            left: 25%;
+            z-index: 1;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+        }
+
+        .card-top-para {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .review-container:hover > .review-card {
+            cursor: pointer;
+            transform: rotateX(180deg) rotateZ(-180deg);
+        }
+
+        .front, .back {
+            height: 100%;
+            width: 100%;
+            border-radius: 2rem;
+            box-shadow: 0px 0px 10px 5px rgba(207, 48, 170, 0.5);
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .back {
+            background-color: black;
+            transform: rotateX(180deg) rotateZ(-180deg);
+        }
+
+        .reviewer-heading {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .reviewer-follow {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .reviewer-icons {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .reviewer-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e81cff;
+        }
+
+        .reviewer-text {
+            font-size: 14px;
+            max-height: 120px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #e81cff black;
+        }
+
+        .reviewer-text::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .reviewer-text::-webkit-scrollbar-thumb {
+            background-color: #e81cff;
+            border-radius: 10px;
+        }
+
+        /* Partners Section with Hovering Effect */
+        .partners {
+            padding: 80px 0;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .partners-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Partner Card with Hover Effect */
+        .partner-card {
+            position: relative;
+            width: 220px;
+            height: 280px;
+            background-color: #f2f2f2;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            perspective: 1000px;
+            box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.1);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .partner-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+        }
+
+        .partner-icon {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translateY(30px) scale(0.7);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 60px;
+            color: #402fb5;
+        }
+
+        .partner-card:hover .partner-icon {
+            transform: scale(0.8);
+        }
+
+        .partner-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f2f2f2;
+            transform: rotateX(-90deg);
+            transform-origin: bottom;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .partner-card:hover .partner-content {
+            transform: rotateX(0deg);
+        }
+
+        .partner-name {
+            margin: 0;
+            margin-top: 30px;
+            font-size: 24px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .partner-description {
+            margin: 20px 0 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .partner-details {
+            margin: 20px 0 0;
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Contact Us Section */
+        .contact {
+            padding: 80px 0;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+        .form-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #cf30aa;
+            box-shadow: 0 0 10px rgba(207, 48, 170, 0.4);
+        }
+
+        textarea.form-input {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            padding: 12px 24px;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: center;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(207, 48, 170, 0.4);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-icon {
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .contact-text {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #cf30aa;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #cf30aa;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-top.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .about-us-container {
+                flex-direction: column;
+            }
+            
+            .about-content, .about-logo {
+                width: 100%;
+                max-width: 100%;
+                text-align: center;
+            }
+            
+            .about-logo {
+                margin-top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">EVRYTHING</div>
+        <div class="nav-links">
+            <a href="#about">About Us</a>
+            <a href="#services">Our Services</a>
+            <a href="#partners">Our Partners</a>
+            <a href="#reviews">Our Reviewers</a>
+            <a href="#contact">Contact Us</a>
+            <a href="login.html" class="login-btn">Login</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to EVRYTHING</h1>
+            <p>Discover a world of endless possibilities. Connect, create, and explore with our innovative platform designed to transform your digital experience.</p>
+            <a href="intro.html" class="cta-btn">Get Started</a>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="about-us">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-us-container">
+            <div class="about-content">
+                <p class="about-text">At EVRYTHING, we strive to provide a comprehensive platform that connects users with a variety of services. Our mission is to simplify your life by offering seamless access to banking, travel, shopping, and entertainment, all in one place.</p>
+                <p class="about-text">Founded with the vision of creating a unified digital experience, EVRYTHING has grown to become a trusted platform for millions of users worldwide. Our dedicated team works tirelessly to ensure that you have access to the best services and experiences, tailored to your preferences.</p>
+                <p class="about-text">We believe in innovation, security, and user-centric design. Every feature and service on our platform is crafted with your needs in mind, ensuring that you have a seamless and enjoyable experience every time you use EVRYTHING.</p>
+            </div>
+            <div class="about-logo">
+                <div class="logo">EVRYTHING</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Services Section - UNIFIED DARK THEME -->
+    <section id="services" class="services-section">
+        <h2 class="section-title">Our Services</h2>
+        <p class="about-text" style="text-align: center; max-width: 800px; margin: 0 auto 30px;">Explore our wide range of services designed to make your life easier and more enjoyable. From banking to entertainment, we've got you covered.</p>
+        
+        <div class="services-container">
+            <!-- Banking Service -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-university"></i></div>
+                <p class="service-heading">Banking</p>
+                <p>Our banking platform offers seamless transactions, real-time tracking, and ultimate security for all your financial needs.</p>
+                <p class="learn-more">Learn More</p>
+            </div>
+
+            <!-- Travel Service -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-plane"></i></div>
+                <p class="service-heading">Travel</p>
+                <p>Plan your perfect getaway with our comprehensive travel service, from flights to accommodations and experiences.</p>
+                <p class="learn-more">Explore Now</p>
+            </div>
+
+            <!-- Shopping Service -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-shopping-bag"></i></div>
+                <p class="service-heading">Shopping</p>
+                <p>Discover a new shopping experience with exclusive products, deals, and personalized recommendations.</p>
+                <p class="learn-more">Shop Now</p>
+            </div>
+
+            <!-- Entertainment Service -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-film"></i></div>
+                <p class="service-heading">Entertainment</p>
+                <p>Access a world of entertainment with our streaming services for music, movies, shows, and more.</p>
+                <p class="learn-more">Watch Now</p>
+            </div>
+
+            <!-- Music Service -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-music"></i></div>
+                <p class="service-heading">Music</p>
+                <p>Stream your favorite songs and discover new artists with our comprehensive music service.</p>
+                <p class="learn-more">Listen Now</p>
+            </div>
+
+            <!-- Reading Service -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-book"></i></div>
+                <p class="service-heading">Reading</p>
+                <p>Access a vast library of books and audiobooks for your reading pleasure anytime, anywhere.</p>
+                <p class="learn-more">Read Now</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="reviews">
+        <h2 class="section-title">What Our Users Say</h2>
+        <div class="reviews-container">
+            <!-- Review 1 -->
+            <div class="review-container">
+                <div class="review-card">
+                    <div class="front">
+                        <div class="card-top">
+                            <p class="card-top-para">"Amazing service!"</p>
+                        </div>
+                        <p class="reviewer-heading">John Doe</p>
+                        <p class="reviewer-follow">Frequent Traveler</p>
+                    </div>
+                    <div class="back">
+                        <p class="reviewer-text">I had a fantastic experience using EVRYTHING for my travel plans. Everything was seamless and easy to manage!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="review-container">
+                <div class="review-card">
+                    <div class="front">
+                        <div class="card-top">
+                            <p class="card-top-para">"Highly recommend!"</p>
+                        </div>
+                        <p class="reviewer-heading">Jane Smith</p>
+                        <p class="reviewer-follow">Shopaholic</p>
+                    </div>
+                    <div class="back">
+                        <p class="reviewer-text">The shopping experience was incredible! I found everything I needed and more. Will definitely use it again!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="review-container">
+                <div class="review-card">
+                    <div class="front">
+                        <div class="card-top">
+                            <p class="card-top-para">"Best banking app!"</p>
+                        </div>
+                        <p class="reviewer-heading">Alice Johnson</p>
+                        <p class="reviewer-follow">Finance Expert</p>
+                    </div>
+                    <div class="back">
+                        <p class="reviewer-text">EVRYTHING's banking service is top-notch. Secure, fast, and user-friendly. I love it!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section id="partners" class="partners">
+        <h2 class="section-title">Our Partners</h2>
+        <div class="partners-container">
+            <!-- Partner 1 -->
+            <div class="partner-card">
+                <div class="partner-logo">
+                    <i class="fas fa-university"></i>
+                </div>
+                <p class="partner-name">Banking Corp</p>
+                <p class="partner-desc">Your trusted banking partner.</p>
+            </div>
+
+            <!-- Partner 2 -->
+            <div class="partner-card">
+                <div class="partner-logo">
+                    <i class="fas fa-plane"></i>
+                </div>
+                <p class="partner-name">Travel Agency</p>
+                <p class="partner-desc">Explore the world with us.</p>
+            </div>
+
+            <!-- Partner 3 -->
+            <div class="partner-card">
+                <div class="partner-logo">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <p class="partner-name">ShopEasy</p>
+                <p class="partner-desc">Your online shopping destination.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-container">
+            <form class="contact-form">
+                <div class="form-group">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-input" type="text" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-input" type="email" id="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="message">Message</label>
+                    <textarea class="form-input" id="message" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                    <p class="contact-text">+1 234 567 890</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <p class="contact-text">info@evrything.com</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <p class="contact-text">123 Main St, City, Country</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">EVRYTHING</div>
+            <div class="footer-links">
+                <a href="#about">About Us</a>
+                <a href="#services">Our Services</a>
+                <a href="#partners">Our Partners</a>
+                <a href="#reviews">What Our Users Say</a>
+                <a href="#contact">Contact Us</a>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="copyright">© 2023 EVRYTHING. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <a href="#" class="scroll-top" id="scroll-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <script>
+        // Scroll to Top Functionality
+        const scrollTopBtn = document.getElementById('scroll-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY> 300) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>

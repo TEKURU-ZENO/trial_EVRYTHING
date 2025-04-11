@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVRYTHING - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: white;
+            overflow-x: hidden;
+            background-color: #000;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('image/home.gif') center/cover no-repeat; /* Changed to use local file */
+            opacity: 1;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: -1;
+        }
+
+        /* Side Navbar Styles */
+        .sidenav {
+            height: 100%;
+            width: 70px;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            overflow-x: hidden;
+            padding-top: 60px;
+            transition: 0.3s;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidenav.expanded {
+            width: 220px;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .sidenav.expanded .logo-text {
+            display: block;
+        }
+
+        .logo-text {
+            display: none;
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: -15px;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 2;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidenav .nav-button {
+            display: flex;
+            align-items: center;
+            width: 90%;
+            margin: 10px 0;
+            padding: 12px;
+            background: transparent;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            justify-content: center;
+        }
+
+        .sidenav.expanded .nav-button {
+            justify-content: flex-start;
+        }
+
+        .sidenav .nav-button:hover {
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(207, 48, 170, 0.4);
+        }
+
+        .nav-button i {
+            font-size: 20px;
+            margin-right: 0;
+            transition: margin 0.3s;
+        }
+
+        .sidenav.expanded .nav-button i {
+            margin-right: 10px;
+        }
+
+        .nav-button span {
+            display: none;
+            white-space: nowrap;
+        }
+
+        .sidenav.expanded .nav-button span {
+            display: block;
+        }
+
+        /* Glitch Effect on Button Hover */
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover::before {
+            animation: glitch-sweep 1s infinite;
+        }
+
+        @keyframes glitch-sweep {
+            0% {
+                left: -100%;
+            }
+            50% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* Services Container */
+        .services-container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px 50px 90px; /* Adjusted padding for side navbar */
+            transition: padding 0.3s;
+        }
+
+        .services-container.nav-expanded {
+            padding-left: 240px;
+        }
+
+        .services-circle {
+            position: relative;
+            width: 650px;
+            height: 650px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .service-card {
+            position: absolute;
+            width: 220px;
+            height: 300px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-origin: center;
+            will-change: transform;
+            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+        }
+
+        /* Position services in a circle - adjusted to prevent top cut-off */
+        .service-card:nth-child(1) { transform: translate(0, -280px); } /* Top */
+        .service-card:nth-child(2) { transform: translate(240px, -140px); } /* Top Right */
+        .service-card:nth-child(3) { transform: translate(240px, 140px); } /* Bottom Right */
+        .service-card:nth-child(4) { transform: translate(0, 280px); } /* Bottom */
+        .service-card:nth-child(5) { transform: translate(-240px, 140px); } /* Bottom Left */
+        .service-card:nth-child(6) { transform: translate(-240px, -140px); } /* Top Left */
+
+        .service-card:hover {
+            transform-origin: center;
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 15px 35px rgba(207, 48, 170, 0.4);
+            z-index: 10;
+        }
+
+        .service-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .service-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .service-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .service-button {
+            padding: 10px 20px;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Glitch Effect on Service Button Hover */
+        .service-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.3s ease;
+        }
+
+        .service-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(207, 48, 170, 0.4);
+        }
+
+        .service-button:hover::before {
+            animation: glitch-sweep 1s infinite;
+        }
+
+        /* Glitch Effect on Logo Hover */
+        .logo-text::before, .logo-text::after {
+            content: 'EVRYTHING';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #402fb5, #cf30aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+
+        .logo-text:hover::before {
+            animation: glitch-effect 0.8s infinite;
+            opacity: 0.8;
+            left: -2px;
+            color: cyan;
+        }
+
+        .logo-text:hover::after {
+            animation: glitch-effect 1.5s infinite reverse;
+            opacity: 0.8;
+            left: 2px;
+            color: red;
+        }
+
+        @keyframes glitch-effect {
+            0% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-2px);
+            }
+            40% {
+                transform: translateX(2px);
+            }
+            60% {
+                transform: translateX(-2px);
+            }
+            80% {
+                transform: translateX(2px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1000px) {
+            .services-circle {
+                width: 100%;
+                height: auto;
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .service-card {
+                position: relative;
+                transform: none !important;
+                margin: 15px auto;
+            }
+            
+            .sidenav {
+                width: 50px;
+            }
+            
+            .sidenav.expanded {
+                width: 180px;
+            }
+            
+            .services-container {
+                padding-left: 70px;
+            }
+            
+            .services-container.nav-expanded {
+                padding-left: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidenav {
+                width: 40px;
+            }
+            
+            .sidenav.expanded {
+                width: 170px;
+            }
+            
+            .services-container {
+                padding-left: 60px;
+            }
+            
+            .services-container.nav-expanded {
+                padding-left: 190px;
+            }
+            
+            .services-circle {
+                padding-top: 20px;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background GIF with Overlay -->
+    <div class="background-container"></div>
+    <div class="overlay"></div>
+
+    <!-- Side Navbar -->
+    <div class="sidenav">
+        <div class="logo-container">
+            <div class="logo-text">EVRYTHING</div>
+            <button class="toggle-btn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        <button class="nav-button">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </button>
+        <button class="nav-button">
+            <i class="fas fa-history"></i>
+            <span>Recent</span>
+        </button>
+        <button class="nav-button">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </button>
+    </div>
+
+    <!-- Services Container -->
+    <div class="services-container">
+        <div class="services-circle">
+            <!-- Service 1 -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-university"></i></div>
+                <h3 class="service-title">Banking</h3>
+                <p class="service-description">Manage accounts, transfer funds, and track expenses securely.</p>
+                <a href="home.html" class="service-button">Enter</a>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-plane"></i></div>
+                <h3 class="service-title">Travel</h3>
+                <p class="service-description">Book flights, hotels, and discover exclusive travel deals.</p>
+                <a href="home.html" class="service-button">Enter</a>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-shopping-bag"></i></div>
+                <h3 class="service-title">Shopping</h3>
+                <p class="service-description">Shop across thousands of stores with personalized recommendations.</p>
+                <a href="home.html" class="service-button">Enter</a>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-film"></i></div>
+                <h3 class="service-title">Entertainment</h3>
+                <p class="service-description">Stream movies, shows, and live events from our premium collection.</p>
+                <a href="home.html" class="service-button">Enter</a>
+            </div>
+
+            <!-- Service 5 -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-music"></i></div>
+                <h3 class="service-title">Music</h3>
+                <p class="service-description">Listen to millions of songs and discover new artists you'll love.</p>
+                <a href="home.html" class="service-button">Enter</a>
+            </div>
+
+            <!-- Service 6 -->
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-book"></i></div>
+                <h3 class="service-title">Reading</h3>
+                <p class="service-description">Access thousands of books, audiobooks, and magazines digitally.</p>
+                <a href="home.html" class="service-button">Enter</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar expansion
+        const toggleBtn = document.querySelector('.toggle-btn');
+        const sidenav = document.querySelector('.sidenav');
+        const servicesContainer = document.querySelector('.services-container');
+        const toggleIcon = document.querySelector('.toggle-btn i');
+        
+        toggleBtn.addEventListener('click', () => {
+            sidenav.classList.toggle('expanded');
+            servicesContainer.classList.toggle('nav-expanded');
+            toggleIcon.classList.toggle('fa-chevron-right');
+            toggleIcon.classList.toggle('fa-chevron-left');
+        });
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Improved hover animation for service cards
+        const serviceCards = document.querySelectorAll('.service-card');
+        const servicesCircle = document.querySelector('.services-circle');
+
+        if (window.innerWidth > 1000) {
+            // Use requestAnimationFrame for smoother animations with reduced lag
+            let ticking = false;
+            let lastMouseX = 0;
+            let lastMouseY = 0;
+            
+            servicesCircle.addEventListener('mousemove', (e) => {
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+                
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const { left, top, width, height } = servicesCircle.getBoundingClientRect();
+                        const centerX = left + width / 2;
+                        const centerY = top + height / 2;
+                        
+                        // Calculate distance from mouse to center
+                        const mouseDistanceFromCenter = Math.sqrt(
+                            Math.pow(lastMouseX - centerX, 2) + 
+                            Math.pow(lastMouseY - centerY, 2)
+                        );
+                        
+                        // Only apply effects if mouse is within reasonable distance of the circle
+                        if (mouseDistanceFromCenter < width / 1.5) {
+                            serviceCards.forEach(card => {
+                                const cardRect = card.getBoundingClientRect();
+                                const cardCenterX = cardRect.left + cardRect.width / 2;
+                                const cardCenterY = cardRect.top + cardRect.height / 2;
+                                
+                                // Calculate distance from mouse to card
+                                const distanceToCard = Math.sqrt(
+                                    Math.pow(lastMouseX - cardCenterX, 2) + 
+                                    Math.pow(lastMouseY - cardCenterY, 2)
+                                );
+                                
+                                // Apply subtle effect based on proximity
+                                if (distanceToCard < 150) {
+                                    // Get original transform value for this card
+                                    const index = Array.from(serviceCards).indexOf(card);
+                                    let baseTransform;
+                                    
+                                    switch(index) {
+                                        case 0: baseTransform = 'translate(0, -280px)'; break;
+                                        case 1: baseTransform = 'translate(240px, -140px)'; break;
+                                        case 2: baseTransform = 'translate(240px, 140px)'; break;
+                                        case 3: baseTransform = 'translate(0, 280px)'; break;
+                                        case 4: baseTransform = 'translate(-240px, 140px)'; break;
+                                        case 5: baseTransform = 'translate(-240px, -140px)'; break;
+                                    }
+                                    
+                                    // Apply subtle scale effect (less than hover effect)
+                                    const scaleAmount = 1.05 - (distanceToCard / 300);
+                                    card.style.transform = `${baseTransform} scale(${Math.max(1, scaleAmount)})`;
+                                } else {
+                                    // Reset to original position based on the card's index
+                                    const index = Array.from(serviceCards).indexOf(card);
+                                    switch(index) {
+                                        case 0: card.style.transform = 'translate(0, -280px)'; break;
+                                        case 1: card.style.transform = 'translate(240px, -140px)'; break;
+                                        case 2: card.style.transform = 'translate(240px, 140px)'; break;
+                                        case 3: card.style.transform = 'translate(0, 280px)'; break;
+                                        case 4: card.style.transform = 'translate(-240px, 140px)'; break;
+                                        case 5: card.style.transform = 'translate(-240px, -140px)'; break;
+                                    }
+                                }
+                            });
+                        }
+                        
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            servicesCircle.addEventListener('mouseleave', () => {
+                serviceCards.forEach((card, index) => {
+                    // Reset to original position based on the card's index
+                    switch(index) {
+                        case 0: card.style.transform = 'translate(0, -280px)'; break;
+                        case 1: card.style.transform = 'translate(240px, -140px)'; break;
+                        case 2: card.style.transform = 'translate(240px, 140px)'; break;
+                        case 3: card.style.transform = 'translate(0, 280px)'; break;
+                        case 4: card.style.transform = 'translate(-240px, 140px)'; break;
+                        case 5: card.style.transform = 'translate(-240px, -140px)'; break;
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
